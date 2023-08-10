@@ -1,0 +1,21 @@
+import {useState,useEffect,createContext,useContext} from "react";
+
+const chatContext = createContext();
+
+const chatProvider=(props)=>{
+    const [user_id,setUser_id] = useState({
+        id: 12345,
+    });
+    return(
+        <chatContext.Provider value={{user_id}}>
+            {props.children}
+        </chatContext.Provider>
+    )
+};
+
+const ChatState = () => {
+    return useContext(chatContext);
+};
+
+export default chatProvider;
+// module.exports = ChatState;
