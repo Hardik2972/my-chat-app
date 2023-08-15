@@ -3,6 +3,7 @@ const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const chatRoute = require("./routes/chat");
 const messageRoute = require("./routes/message");
+const fetchMessageRouter = require("./routes/fetchMessage");
 const app = express();
 const cors = require ("cors");
 const bodyParser = require("body-parser");
@@ -22,6 +23,7 @@ app.use("/user",userRoute);
 app.use("/auth",authRoute);
 app.use("/user/chat",chatRoute);
 app.use("/user/chat/message",messageRoute);
+app.use("/user/chatfm",fetchMessageRouter);
 
 server.listen(8080,()=>{
     console.log("server balle valle has been started now");
@@ -39,12 +41,12 @@ const io = new Server(server,{
 io.on("connection",(socket)=>{
     console.log("connected to socket");
 
-    socket.on("join_room",(room)=>{
-        socket.join(room);
+    socket.on("join room",(data)=>{
+        socket.join(data.room);
     });
 
     socket.on("send-message",(data)=>{
         console.log(data.message);
-        socket.to(data.user_id).emit("receive-message",data.message);
+        socket.to(data.room).emit("receive-message",data.message);
     });
 });

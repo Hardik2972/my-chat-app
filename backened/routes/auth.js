@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.post("/",(req,res)=>{
     const token= req.body.userToken;
-    console.log("the id id ",jwt.decode(token).id)
     if(jwt.verify(token,"Hardik")){
         res.json({
             user: true,
